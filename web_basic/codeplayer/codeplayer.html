@@ -1,0 +1,208 @@
+
+<!doctype html>
+<html>
+<head>
+    <title>Form Validation</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+   
+    <script type="text/javascript" src="jquery.min.js"> </script>
+    
+   
+    <style type="text/css">
+       
+       body {
+            margin:0;
+            padding:0;
+            font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+            font-weight: 300;
+            
+       }
+
+       #menubar {
+            width:100%;
+            height:40px;
+            background-color:#e0e0e0;
+            border-bottom:1px solid grey;
+       }
+
+       #logo {
+            line-height: 40px;
+            padding-left: 20px;
+            font-weight: bold;
+            float:left;
+       }
+
+       #buttondiv{
+        float:right;
+        padding:4px 10px 0 0;
+       }
+
+       #runButton {
+        font-size:1.2em;
+
+       }
+
+       #toggles {
+            margin:0;
+            list-style:none;
+            width:200px;
+            margin:0 auto;
+            position: relative;
+            top:5px;
+            
+       }
+
+       #toggles li {
+            float:left;
+            border:1px solid grey;
+            padding:5px;
+        
+            border-radius: 3px;
+            text-align: center;
+       }
+
+       .clear {
+            clear:both;
+       }
+
+       .codeContainer {
+            height:100%;
+            width:50%;
+            float:left;
+            position:relative;
+            
+       }
+
+       .codeContainer textarea {
+            width:100%;
+            height:100%;
+            border:none;
+            border-right: 2px solid grey;
+            font-family: monospace;
+            font-size:1.1em;
+            box-sizing: border-box;
+            padding:5px;
+
+       }
+
+       .codeLabel {
+            position:absolute;
+            right:10px;
+            top:10px;
+            color:grey;
+       }
+
+       #CSSContainer, #JSContainer {
+            display: none;  
+       }
+
+       iframe {
+            height:100%;
+            position:relative;
+            margin-left:10px;
+            border:none;
+       }
+
+       .selected {
+            background-color:grey;
+       }
+    </style>
+
+
+
+</head>
+
+<body>
+    
+    <div id="wrapper">
+        <div id="menubar">
+            <div id="logo">
+                Code Player
+            </div>
+            <div id="buttondiv">
+                <button id="runButton">Run</button>
+            </div>
+
+            <ul id="toggles">
+                <li class="toggle selected">HTML</li>
+                <li class="toggle">CSS</li>
+                <li class="toggle">JS</li>
+                <li class="toggle selected">Result</li>
+            </ul>
+        </div>
+        
+
+         <div class="clear"></div>
+
+        
+        <div class="codeContainer" id="HTMLContainer">
+            <div class="codeLabel">HTML</div>
+            <textarea id="htmlCode">
+                <div id="test">Hello World!!</div>
+                <button id="button">Test</button>
+
+            </textarea>
+        </div>
+
+         <div class="codeContainer" id="CSSContainer">
+            <div class="codeLabel">CSS</div>
+            <textarea id="cssCode">html {background-color:blue} </textarea>
+        </div>
+
+         <div class="codeContainer" id="JSContainer">
+            <div class="codeLabel">JS</div>
+            <textarea id="jsCode">
+          
+               
+                    document.getElementById("test").innerHTML+="GoodBye World!!";
+           
+            </textarea>
+        </div>
+
+        <div class="codeContainer" id="ResultContainer">
+            <div class="codeLabel">Result</div>
+            <iframe id="resultFrame"></iframe>
+        </div>
+    </div>
+   
+   
+ 
+
+    <script>
+
+       var windowHeight = $(window).height();
+       var menubarHeight = $("#menubar").height();
+
+       var codeContainerHeight = windowHeight - menubarHeight;
+       $(".codeContainer").height(codeContainerHeight+"px");
+
+       $(".toggle").click(function() {
+
+            $(this).toggleClass("selected");
+
+            var activeDiv=$(this).html();
+            
+            $("#"+activeDiv+"Container").toggle();
+
+            var showingDivs=$(".codeContainer").filter(function() {
+                return($(this).css("display") != "none");
+            }).length;
+            
+
+            var width=100/showingDivs;
+
+            $(".codeContainer").width(width+"%");
+       });
+    
+        $("#runButton").click(function() {
+            $("iframe").contents().find("html").html("<style>"+$("#cssCode").val()+"</style>"+$("#htmlCode").val());
+
+            document.getElementById("resultFrame").contentWindow.eval($("#jsCode").val());
+        });
+    </script>
+
+</body>
+</html>
