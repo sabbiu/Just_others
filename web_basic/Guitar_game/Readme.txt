@@ -1,0 +1,1 @@
+It contains the game where it asks you the guess the name of the string my giving you the string number.

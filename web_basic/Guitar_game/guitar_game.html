@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>Guitar String Game</title>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	
+	<style>
+		.btn {
+			width: 50px;
+			height: 50px;
+			background-color: black;
+			padding: 5px;
+			margin: 10px;
+			float: left;
+			color: white;
+			font-weight: bold;
+			font-size: 2.4em;
+			text-align: center;
+		}
+		
+		#next, #reset {
+			margin-left: 50px;
+			padding: 5px 5px 5px 5px;
+			background-color: white;
+			color: black;
+			font-size: 2.4em;
+		
+		}
+		#reset {
+			margin: 0px;
+			
+		}
+		
+		p{
+			font-weight: bold;
+			font-size: 40px;
+			padding-left: 10px;
+		}
+		
+		#time_id {
+			font-size: 20px;
+			padding-left: 240px;
+		}
+		
+		.info {
+			float: left;
+			font-size: 40px;
+			padding: 5px 50px 0px 50px;
+			
+		}
+		
+		#correct {
+			color: green;
+		}
+		
+		#incorrect {
+			color: red;
+		}
+		
+		body {
+			background-color: aliceblue;
+		}
+		
+	
+	</style>
+	
+	<script   src="http://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+</head>
+
+
+<body>
+<div class='col-xs-12'>	
+	<div>
+	<p id='time_id'>Time : <span id='timeT'></span></p>
+	</div>
+	<div>
+	<p>String: &nbsp; &nbsp;<span id='question'>4</p>
+	</div>
+	
+	<div id='btn1' class='btn'>S</div>
+	<div id='btn2' class='btn'>T</div>
+	<div id='btn3' class='btn'>A</div>
+	<div id='btn4' class='btn'>R</div>
+	<div id='btn5' class='btn'>T</div>
+	<div style='clear:both'></div>
+	<button id='next' name='NEXT'>NEXT >> </button>
+	<button id='reset'>RESET </button>
+	<br>
+	<div id='correct' class='info'> 0 </div>
+	<div id='incorrect' class='info'> 0 </div>
+	<div id='bsttime' class='info'> 0 </div>
+	<div style='clear:both'></div>
+</div>
+	<script>
+	
+		var begin, clicked, diff;
+		var bestTime = 1000000;
+	
+		function shuffle(array) {
+			var currentIndex = array.length, temporaryValue, randomIndex;
+
+			// While there remain elements to shuffle...
+			while (0 !== currentIndex) {
+
+				// Pick a remaining element...
+				randomIndex = Math.floor(Math.random() * currentIndex);
+				currentIndex -= 1;
+
+				// And swap it with the current element.
+				temporaryValue = array[currentIndex];
+				array[currentIndex] = array[randomIndex];
+				array[randomIndex] = temporaryValue;
+			}
+
+			return array;
+		}
+		String.prototype.toNum = function(){
+			return parseInt(this, 10);
+		}
+		
+		var array = ['E', 'B', 'G', 'D', 'A'];
+		var correctArray = ['E', 'B', 'G', 'D', 'A', 'E'];
+		var btnArray = ['btn1', 'btn2', 'btn3', 'btn4', 'btn5'];
+		var check = true;
+		var stringValue;
+		document.getElementById('next').onclick = function() {
+			array = shuffle(array);
+			
+			for ( var i=0; i<btnArray.length; i++)
+				document.getElementById(btnArray[i]).innerHTML = array[i];
+			stringValue = Math.floor(Math.random()*6)+1;
+			document.getElementById('question').innerHTML = (stringValue).toString();
+			
+			begin = Date.now();
+			check = false;
+		}
+		
+		$('.btn').click(function() {
+		
+			
+			if(!check) {
+				clicked = Date.now();
+				diff = clicked - begin;
+				diff/=1000;
+				
+				disp = diff + ' s';
+				$('#timeT').html(disp);
+				check = true;
+				if( $(this).html() == correctArray[$('#question').html().toNum() -1] ) {
+					$('#correct').html($('#correct').html().toNum()+1);
+					if(diff<bestTime) {
+						bestTime = diff;
+						$('#bsttime').html(bestTime + ' s');
+					}
+					
+				} else {
+					$('#incorrect').html($('#incorrect').html().toNum()+1);
+				}
+			}
+		});
+		
+		$('#reset').click(function(){
+			$('#incorrect').html('0');
+			$('#correct').html('0');
+			$('#bsttime').html('0');
+			
+		});
+	
+	</script>
+</body>
+
+</html>
