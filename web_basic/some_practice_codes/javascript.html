@@ -1,0 +1,48 @@
+
+<!doctype html>
+<html>
+<head>
+    <title>Example Domain</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+   
+</head>
+
+<body>
+
+    <p id="text1"> Some Text </p>
+
+<p> </p>
+    <button id="textChanger"> Click Me to change text 1 ... </button>
+
+    <button id="textAppender"> Append some text</button>
+<button id="textCreator"> Create some text</button>
+<div id="emptyDiv"></div>
+    <p id="text2">Javascript is...</p>
+
+
+
+    <script type="text/javascript">
+
+        //This is comment
+
+        document.getElementById("text1").innerHTML="Some More Text";
+
+        document.getElementById("textChanger").onclick=function() {
+            document.getElementById("text1").innerHTML="Woah! Text Changed";
+        }
+
+        document.getElementById("textAppender").onclick=function() {
+            document.getElementById("text2").innerHTML = document.getElementById("text2").innerHTML + " great!!";
+        }
+
+        document.getElementById("textCreator").onclick=function() {
+            document.getElementById("emptyDiv").innerHTML="<ol><li>Cat</li><li>Dog</li></ol>";
+        }
+    </script>
+
+    
+</body>
+</html>
