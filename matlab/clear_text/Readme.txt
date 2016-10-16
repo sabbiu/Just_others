@@ -1,0 +1,1 @@
+Trying to write script that gives clear distinction of text from captured photo
