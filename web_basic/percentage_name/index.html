@@ -1,0 +1,49 @@
+
+<!doctype html>
+<html>
+<head>
+    <title>Example Domain</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+   
+  
+</head>
+
+<body>
+<div>
+
+    <h1>ENTER TEXT:</h1>
+    <h2><input id="text" type="text" name="text"><br>
+	Result : <span id="result" >go</span><br><hr></h2>
+	<button id="button1">Check the Result</button>
+</div>
+
+
+ <script type="text/javascript">
+   
+		document.getElementById("button1").onclick = function() {
+			var mytext = document.getElementById("text").value;
+			
+			sum = 0;
+			for(var i=0, len=mytext.length; i<len;i++){
+				var n = mytext.charCodeAt(i);
+				if((n>=65 && n<=90)||(n>=97 && n<=122)) {
+				if (n<95)
+				n-=64;
+				else
+				n-=96;
+				sum+=n;
+				}
+			}
+			
+			
+			 var n = sum.toString();
+			 
+			document.getElementById("result").innerHTML = n.concat(" %");
+		}
+		
+   </script>
+</body>
+</html>
